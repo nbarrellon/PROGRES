@@ -2,7 +2,7 @@ from socket import *
 import datetime
 import time
 serverPort = 1234
-serverSocket = socket(AF_INET,SOCK_STREAM)
+serverSocket = socket(AF_INET,SOCK_STREAM) #SOCK_STREAM pour TCP
 serverSocket.bind(('',serverPort))
 serverSocket.listen()
 print("Server Ready")
