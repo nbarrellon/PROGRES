@@ -2,7 +2,7 @@ from socket import *
 from pathlib import Path
 
 serverPort = 1234
-serverSocket = socket(AF_INET,SOCK_STREAM)
+serverSocket = socket(AF_INET,SOCK_STREAM) #SOCK_STREAM => TCP
 serverSocket.bind(('',serverPort))
 serverSocket.listen()
 print("Server Ready")
