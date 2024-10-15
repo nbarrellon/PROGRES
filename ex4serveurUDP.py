@@ -33,4 +33,7 @@ while True:
                 numero_datagramme+=1
             #envoie du dernier datagramme incomplet
             serverSocket.sendto(fichier_a_envoyer.encode('utf-8'),clientAddress)
-            print("Envoi réalisé")
+    #Pour mettre fin au flux
+    print("Envoi réalisé") 
+    serverSocket.sendto("ENVOI TERMINE".encode('utf-8'),clientAddress)
+            

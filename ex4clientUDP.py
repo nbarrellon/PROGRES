@@ -7,7 +7,11 @@ message = message + "\r\n\r\n\r\n"
 print("Message à envoyer :",message)
 message = message.encode('utf-8')
 clientSocket.sendto(message,(serverName,serverPort))
+numero_datagramme = 1
 modifiedMessage,serverAddress = clientSocket.recvfrom(2048)
-print("Réponse du serveur:")
-print(modifiedMessage.decode('utf-8'))
+while modifiedMessage.decode('utf-8')!="ENVOI TERMINE":
+    print("Datagramme n°:",numero_datagramme)
+    print(modifiedMessage.decode('utf-8'))
+    numero_datagramme +=1
+    modifiedMessage,serverAddress = clientSocket.recvfrom(2048)
 clientSocket.close()
