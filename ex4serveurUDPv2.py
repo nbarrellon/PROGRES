@@ -27,15 +27,17 @@ while True:
             fichier = requete[4:-6]
             with open(fichier) as f:
                 fichier_a_envoyer = f.read()
-            numero_datagramme = 1
+            
+            liste_datagramme = [] #on coupe la donnée en morceaux de 256o
             nb_datagramme = len(fichier_a_envoyer)//256+1 #nombre de datagrammes necessaires (si MSS=256o)
-            while len(fichier_a_envoyer)>256:
+            while len(fichier_a_envoyer):
+                liste_datagramme.append(datagramme(fichier_a_envoyer[:256]))
+                fichier_a_envoyer = fichier_a_envoyer[256:]
+            #envoie du dernier datagramme incomplet
+            for numero_datagramme in range(len(liste_datagramme)):
                 print("Envoi datagramme ",numero_datagramme)
                 serverSocket.sendto(datagramme(fichier_a_envoyer[:256],nb_datagramme,numero_datagramme).encode('utf-8'),clientAddress)
-                fichier_a_envoyer = fichier_a_envoyer[256:]
-                numero_datagramme+=1
-            #envoie du dernier datagramme incomplet
-            serverSocket.sendto(datagramme(fichier_a_envoyer,nb_datagramme,numero_datagramme).encode('utf-8'),clientAddress)
+            
     #Pour mettre fin au flux
     print("Envoi réalisé") 
     serverSocket.sendto("ENVOI TERMINE".encode('utf-8'),clientAddress)
